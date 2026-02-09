@@ -1,3 +1,10 @@
 ## 0.1.0
 
-- Initial version.
+- Initial version
+- init()
+- setNulStr()
+- getString()
+- get()
+- getAs()
+- setSingle()
+- setList()
