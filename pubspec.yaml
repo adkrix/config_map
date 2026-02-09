@@ -1,7 +1,8 @@
 name: config_map
 description: "Helper class for converting string values of  object in predefined types and for editing ones"
 version: 0.1.0
-homepage: Https:https://github.com/adkrix/config_map
+homepage: https://github.com/adkrix/config_map
+repository: https://github.com/adkrix/config_map
 
 environment:
   sdk: ^3.9.0

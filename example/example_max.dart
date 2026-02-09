@@ -5,20 +5,22 @@ import 'package:config_map/config_map.dart';
 import 'const.dart';
 
 List<ConfigMapItem> fieldList = [
-  ConfigMapItem(fTitle, type: ConfigMapType.string),
-  ConfigMapItem(fDescription, type: ConfigMapType.multiline),
-  ConfigMapItem(fLanguage, type: ConfigMapType.select, options: langOptions),
-  ConfigMapItem(fShow, type: ConfigMapType.bool),
-  ConfigMapItem(fAuthors, type: ConfigMapType.strings),
-  ConfigMapItem(fPublishers, type: ConfigMapType.multiselect),
-  ConfigMapItem(fOrder, type: ConfigMapType.int),
-  ConfigMapItem(fOrders, type: ConfigMapType.ints),
-  ConfigMapItem(fPrice, type: ConfigMapType.double),
-  ConfigMapItem(fPrices, type: ConfigMapType.doubles),
-  ConfigMapItem(fCount, type: ConfigMapType.intSelect),
-  ConfigMapItem(fCounts, type: ConfigMapType.intMultiselect),
-  ConfigMapItem(fDiscount, type: ConfigMapType.doubleSelect),
-  ConfigMapItem(fDiscounts, type: ConfigMapType.doubleMultiselect),
+  ConfigMapItem(
+    fTitle,
+  ), // eq ConfigMapItem(fTitle, type: ConfigMapTypes.string)
+  ConfigMapItem(fDescription, type: ConfigMapTypes.multiline),
+  ConfigMapItem(fLanguage, type: ConfigMapTypes.select, options: langOptions),
+  ConfigMapItem(fShow, type: ConfigMapTypes.bool),
+  ConfigMapItem(fAuthors, type: ConfigMapTypes.strings),
+  ConfigMapItem(fPublishers, type: ConfigMapTypes.multiselect),
+  ConfigMapItem(fOrder, type: ConfigMapTypes.int),
+  ConfigMapItem(fOrders, type: ConfigMapTypes.ints),
+  ConfigMapItem(fPrice, type: ConfigMapTypes.double),
+  ConfigMapItem(fPrices, type: ConfigMapTypes.doubles),
+  ConfigMapItem(fCount, type: ConfigMapTypes.intSelect),
+  ConfigMapItem(fCounts, type: ConfigMapTypes.intMultiselect),
+  ConfigMapItem(fDiscount, type: ConfigMapTypes.doubleSelect),
+  ConfigMapItem(fDiscounts, type: ConfigMapTypes.doubleMultiselect),
 ];
 
 //

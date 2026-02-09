@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:config_map/config_map.dart';
+import 'utils.dart';
 
 class ConfigMap {
   late final List<ConfigMapItem> _fields;
@@ -13,6 +14,7 @@ class ConfigMap {
 
   static bool nulStrIsNotEmpty(String? str) => str != null && str != '';
 
+  /// Set/reset new json object which using for storing data
   void init(ConfigMapJson json, {bool withMerge = false}) {
     if (!withMerge) {
       _json = {};
@@ -22,6 +24,7 @@ class ConfigMap {
     }
   }
 
+  /// Export json object for storing. Full and compact
   ConfigMapJson toJson({bool compact = false}) {
     final ConfigMapJson res = {};
     for (final field in _fields) {
@@ -31,6 +34,7 @@ class ConfigMap {
     return res;
   }
 
+  /// Return set or unset fields for external editing form. Use key `used`
   List<ConfigMapItem> fields({bool used = true}) {
     return _fields.fold(<ConfigMapItem>[], (acc, key) {
       final inList = used ? _json[key.name] != null : _json[key.name] == null;
@@ -38,21 +42,27 @@ class ConfigMap {
     });
   }
 
+  /// Check if the field is set
   bool has(String name) => toJson()[name] != null;
 
+  /// Check field by name in fields set
   ConfigMapItem? fieldByName(String name) =>
       _fields.where((field) => field.name == name).firstOrNull;
 
+  /// Check if the field is available for current fields setting
   bool available(String name) => fieldByName(name) != null;
 
+  /// Set any set value as `String` the way the value is stored internally
   void setNulStr(String name, String? value) {
     if (available(name)) {
       _json[name] = value;
     }
   }
 
+  /// Get any value as `String` the way the value is stored internally
   String? getString(String name) => available(name) ? _json[name] : null;
 
+  /// Get preset value with preset type (own for each field)
   Object? get(String name) {
     final value = getString(name);
 
@@ -61,38 +71,38 @@ class ConfigMap {
     if (field == null) return null;
 
     switch (field.type) {
-      case ConfigMapType.string:
-      case ConfigMapType.multiline:
-      case ConfigMapType.select:
+      case ConfigMapTypes.string:
+      case ConfigMapTypes.multiline:
+      case ConfigMapTypes.select:
         return value;
-      case ConfigMapType.bool:
+      case ConfigMapTypes.bool:
         return value == 'true';
-      case ConfigMapType.strings:
-      case ConfigMapType.multiselect:
+      case ConfigMapTypes.strings:
+      case ConfigMapTypes.multiselect:
         return value.split('\n').toList();
-      case ConfigMapType.int:
-      case ConfigMapType.intSelect:
+      case ConfigMapTypes.int:
+      case ConfigMapTypes.intSelect:
         try {
           return int.parse(value);
         } catch (e) {
           return null;
         }
-      case ConfigMapType.double:
-      case ConfigMapType.doubleSelect:
+      case ConfigMapTypes.double:
+      case ConfigMapTypes.doubleSelect:
         try {
           return double.parse(value);
         } catch (e) {
           return null;
         }
-      case ConfigMapType.ints:
-      case ConfigMapType.intMultiselect:
+      case ConfigMapTypes.ints:
+      case ConfigMapTypes.intMultiselect:
         try {
           return value.split('\n').map((item) => int.parse(item)).toList();
         } catch (e) {
           return null;
         }
-      case ConfigMapType.doubles:
-      case ConfigMapType.doubleMultiselect:
+      case ConfigMapTypes.doubles:
+      case ConfigMapTypes.doubleMultiselect:
         try {
           return value.split('\n').map((item) => double.parse(item)).toList();
         } catch (e) {
@@ -101,42 +111,38 @@ class ConfigMap {
     }
   }
 
+  /// Get field value with generic type. Can generate exception TypeError.
   T getAs<T>(String name) => get(name) as T;
 
-  void setAs<T>(String name, T value) {
-    if (!available(name)) return;
+  /// Set single `value` on key `name`. Value can be simple type `int` || `double` || `String` || `bool`
+  void setSingle(String name, dynamic value) {
+    final singleType = isSingleType(value);
     final field = fieldByName(name);
-    if (field == null) return;
-    String strVal = '';
-    switch (field.type) {
-      case ConfigMapType.bool:
-        throw UnimplementedError();
-      case ConfigMapType.string:
-      case ConfigMapType.multiline:
-      case ConfigMapType.select:
-      // TODO: Handle this case.
-      case ConfigMapType.int:
-      case ConfigMapType.intSelect:
-      case ConfigMapType.double:
-      case ConfigMapType.doubleSelect:
-        strVal = value.toString();
-
-      case ConfigMapType.strings:
-      case ConfigMapType.multiselect:
-      case ConfigMapType.ints:
-      case ConfigMapType.intMultiselect:
-      case ConfigMapType.doubles:
-      case ConfigMapType.doubleMultiselect:
-        if (value is List) {
-          strVal = value.map((item) => item.toString()).join('\n');
-        } else {
-          throw TypeError();
-        }
+    if (field == null ||
+        !mapTypesAsSingle.contains(field.type) ||
+        !singleType) {
+      throw TypeError();
     }
-
-    setNulStr(name, strVal);
+    setNulStr(name, value.toString());
   }
 
+  /// Set list `value` on key `name`. Value can be List of simple type `int` || `double` || `String` || `bool`
+  void setList(String name, List<dynamic> value) {
+    final field = fieldByName(name);
+    if (field == null || !mapTypesAsList.contains(field.type)) {
+      throw TypeError();
+    }
+    final converted = value
+        .map((item) {
+          return item.toString();
+        })
+        .join('\n');
+    setNulStr(name, converted);
+  }
+
+  // void setMap(String name, Map<String, dynamic> value) for `map`, `intMap`, `doubleMap`, `boolMap`
+
+  /// Convert json object to string ignoring keys with null.
   @override
   String toString() {
     return _json.entries

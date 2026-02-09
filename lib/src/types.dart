@@ -1,45 +1,74 @@
 typedef ConfigMapJson = Map<String, String?>;
 
-enum ConfigMapType {
-  /// parsing as <b>String</b>
+/// Field types for getter, setter and form generation
+enum ConfigMapTypes {
+  /// parsing as `String`
   string,
 
-  /// parsing as <b>String</b>
+  /// parsing as `String`
   multiline,
 
-  /// parsing as <b>String</b>
+  /// parsing as `String`
   select,
 
-  /// parsing as <b>bool</b>
+  /// parsing as `String`
   bool,
 
-  /// parsing as <b>int</b>
+  /// parsing as `int`
   int,
 
-  /// parsing as <b>int</b>
+  /// parsing as `int`
   intSelect,
 
   /// parsing as <b>double</b>
   double,
 
-  /// parsing as <b>double</b>
+  /// parsing as `double`
   doubleSelect,
 
-  /// parsing as <b>List&lt;String></b>
+  /// parsing as `List<String>`
   strings,
 
-  /// parsing as <b>List&lt;String></b>
+  /// parsing as `List<String>`
   multiselect,
 
-  /// parsing as <b>List&lt;int></b>
+  /// parsing as `List<int>`
   ints,
 
-  /// parsing as <b>List&lt;int></b>
+  /// parsing as `List<int>`
   intMultiselect,
 
-  /// parsing as <b>List&lt;double></b>
+  /// parsing as `List<double>`
   doubles,
 
-  /// parsing as <b>List&lt;double></b>
+  /// parsing as `List<double>`
   doubleMultiselect,
+
+  //
+  // map `Map<String, String>`
+  // intMap `Map<String, int>`
+  // doubleMap `Map<String, double>`
+  // boolMap `Map<String, bool>`
 }
+
+/// List of single fields
+const mapTypesAsSingle = {
+  ConfigMapTypes.string,
+  ConfigMapTypes.multiline,
+  ConfigMapTypes.select,
+  ConfigMapTypes.bool,
+  ConfigMapTypes.int,
+  ConfigMapTypes.intSelect,
+  ConfigMapTypes.double,
+  ConfigMapTypes.doubleSelect,
+};
+
+/// List of iterable fields
+const mapTypesAsList = {
+  ConfigMapTypes.strings,
+  ConfigMapTypes.multiselect,
+  ConfigMapTypes.ints,
+  ConfigMapTypes.intMultiselect,
+  ConfigMapTypes.doubles,
+  ConfigMapTypes.doubleMultiselect,
+};

@@ -1,9 +1,10 @@
 import 'package:config_map/config_map.dart';
 
+/// Single field setting
 class ConfigMapItem {
   final String name;
-  final ConfigMapType type;
+  final ConfigMapTypes type;
   final Map<String, String>? options;
 
-  ConfigMapItem(this.name, {this.type = ConfigMapType.string, this.options});
+  ConfigMapItem(this.name, {this.type = ConfigMapTypes.string, this.options});
 }

@@ -18,28 +18,46 @@ TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder. 
 
 ```dart
+import 'package:config_map/config_map.dart';
+
 // <T extends Enum>
 final myMapConfig = {
   'title': 'Title of book',
   'description': 'Description of book', 
   'authors': 'John Author\nJain Author',
   'show': 'true',
+  'count': '123',
 };
 
 enum FieldNames {
   title,description, authors, show
 }
 List<ConfigMapItem> fields = [
-  ConfigMapItem(FieldNames.title, ConfigMapType.text),
-  ConfigMapItem(FieldNames.description, ConfigMapType.multiline),
-  ConfigMapItem(FieldNames.authors, ConfigMapType.strings),
-  ConfigMapItem(FieldNames.show, ConfigMapType.bool),
+  ConfigMapItem('title', ConfigMapType.string),
+  ConfigMapItem('description', ConfigMapType.multiline),
+  ConfigMapItem('authors', ConfigMapType.strings),
+  ConfigMapItem('show', ConfigMapType.bool),
+  ConfigMapItem('count', ConfigMapType.int),
 ];
 
-final config = ConfigMap<FieldNames>(fields, json: myMapConfig);
+void main() {
+  final config = ConfigMap<FieldNames>(fields, json: myMapConfig);
 
-final String title = config.get(FieldNames.title);
-final bool show = config.get(FieldNames.show);
+  final String title = config.get('title');
+  final bool show = config.get('show');
+  final int count = config.get('count'); // 123
+  final int countInt = config.getAs<int>('count'); // 123
+  final List<String> authors = config.get('authors'); // ['John Author', 'Jain Author']
+
+  config.setSingle('count', 456);
+  final String countStr = config.getString('count'); // '456'
+  final int countNext = config.getAs<int>('count'); // 456
+
+  config.setList('author', ['Bob', 'Bill']);
+  final List<String> authorsNext = config.get('authors'); // ['Bob', 'Bill']
+  final List<String> authorsStr = config.getString('authors'); // 'Bob\nBill'
+}
+
 ```
 
 ## Additional information
@@ -62,6 +80,4 @@ final bool show = config.get(FieldNames.show);
 | intMultiselect    | List&lt;int>    | Custom select Widget |
 | doubles           | List&lt;double> | List of TextField    |
 | doubleMultiselect | List&lt;double> | Custom select Widget |
-
- 
 

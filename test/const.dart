@@ -1,27 +1,27 @@
 import 'package:config_map/config_map.dart';
 
 final Map<String, ConfigMapItem> fieldMap = {
-  'string': ConfigMapItem('string', type: ConfigMapType.string),
-  'multiline': ConfigMapItem('multiline', type: ConfigMapType.multiline),
-  'select': ConfigMapItem('select', type: ConfigMapType.select, options: {}),
-  'bool': ConfigMapItem('bool', type: ConfigMapType.bool),
-  'strings': ConfigMapItem('strings', type: ConfigMapType.strings),
-  'multiselect': ConfigMapItem('multiselect', type: ConfigMapType.multiselect),
-  'int': ConfigMapItem('int', type: ConfigMapType.int),
-  'ints': ConfigMapItem('ints', type: ConfigMapType.ints),
-  'double': ConfigMapItem('double', type: ConfigMapType.double),
-  'doubles': ConfigMapItem('doubles', type: ConfigMapType.doubles),
-  'intSelect': ConfigMapItem('intSelect', type: ConfigMapType.intSelect),
+  'string': ConfigMapItem('string', type: ConfigMapTypes.string),
+  'multiline': ConfigMapItem('multiline', type: ConfigMapTypes.multiline),
+  'select': ConfigMapItem('select', type: ConfigMapTypes.select, options: {}),
+  'bool': ConfigMapItem('bool', type: ConfigMapTypes.bool),
+  'strings': ConfigMapItem('strings', type: ConfigMapTypes.strings),
+  'multiselect': ConfigMapItem('multiselect', type: ConfigMapTypes.multiselect),
+  'int': ConfigMapItem('int', type: ConfigMapTypes.int),
+  'ints': ConfigMapItem('ints', type: ConfigMapTypes.ints),
+  'double': ConfigMapItem('double', type: ConfigMapTypes.double),
+  'doubles': ConfigMapItem('doubles', type: ConfigMapTypes.doubles),
+  'intSelect': ConfigMapItem('intSelect', type: ConfigMapTypes.intSelect),
   'intMultiselect': ConfigMapItem(
     'intMultiselect',
-    type: ConfigMapType.intMultiselect,
+    type: ConfigMapTypes.intMultiselect,
   ),
   'doubleSelect': ConfigMapItem(
     'doubleSelect',
-    type: ConfigMapType.doubleSelect,
+    type: ConfigMapTypes.doubleSelect,
   ),
   'doubleMultiselect': ConfigMapItem(
     'doubleMultiselect',
-    type: ConfigMapType.doubleMultiselect,
+    type: ConfigMapTypes.doubleMultiselect,
   ),
 };
