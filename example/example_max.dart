@@ -5,9 +5,7 @@ import 'package:config_map/config_map.dart';
 import 'const.dart';
 
 List<ConfigMapItem> fieldList = [
-  ConfigMapItem(
-    fTitle,
-  ), // eq ConfigMapItem(fTitle, type: ConfigMapTypes.string)
+  ConfigMapItem(fTitle), // default type: ConfigMapTypes.string
   ConfigMapItem(fDescription, type: ConfigMapTypes.multiline),
   ConfigMapItem(fLanguage, type: ConfigMapTypes.select, options: langOptions),
   ConfigMapItem(fShow, type: ConfigMapTypes.bool),
