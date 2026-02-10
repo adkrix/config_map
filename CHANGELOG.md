@@ -12,3 +12,6 @@
 ## 0.1.1
 - add comments
 - fix warnings
+
+## 0.1.2
+- add comments to fix warnings
