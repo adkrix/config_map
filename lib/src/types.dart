@@ -1,3 +1,4 @@
+/// Storing type
 typedef ConfigMapJson = Map<String, String?>;
 
 /// Field types for getter, setter and form generation

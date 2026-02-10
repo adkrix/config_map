@@ -109,7 +109,6 @@ void main() {
       expect(config.getAs<List<double>>('doubleMultiselect'), [125.2, 126.2]);
     });
 
-
     // -----------
   });
 }

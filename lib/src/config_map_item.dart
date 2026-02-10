@@ -6,5 +6,6 @@ class ConfigMapItem {
   final ConfigMapTypes type;
   final Map<String, String>? options;
 
+  /// Constructor
   ConfigMapItem(this.name, {this.type = ConfigMapTypes.string, this.options});
 }

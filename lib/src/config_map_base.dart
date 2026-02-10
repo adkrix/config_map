@@ -1,17 +1,21 @@
 import 'package:collection/collection.dart';
 import 'package:config_map/config_map.dart';
-import 'utils.dart';
 
+/// Object converter
 class ConfigMap {
   late final List<ConfigMapItem> _fields;
-  final ConfigMapJson json;
-  late ConfigMapJson _json;
+  ConfigMapJson _json = {};
 
-  ConfigMap({required List<ConfigMapItem> fields, this.json = const {}}) {
+  /// Constructor
+  ConfigMap({
+    required List<ConfigMapItem> fields,
+    ConfigMapJson json = const {},
+  }) {
     _fields = fields;
     init(json);
   }
 
+  /// Check empty string -  '' or `null`
   static bool nulStrIsNotEmpty(String? str) => str != null && str != '';
 
   /// Set/reset new json object which using for storing data
