@@ -15,3 +15,6 @@
 
 ## 0.1.2
 - add comments to fix warnings
+
+## 0.1.3
+- add example, change readme
