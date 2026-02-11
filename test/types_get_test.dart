@@ -8,12 +8,12 @@ void main() {
     ConfigMap config = ConfigMap(fields: fieldMap.values.toList());
 
     setUp(() {
-      config.init({});
+      config.initConfigJson({});
     });
 
     test('string', () {
-      config.setNulStr('string', 'my test');
-      expect(config.getString('string'), 'my test');
+      config.setNulStr('string', '"my test"');
+      expect(config.getString('string'), '"my test"');
       final anyVal = config.get('string');
       expect(anyVal, 'my test');
       expect(anyVal.runtimeType.toString(), 'String');
@@ -21,16 +21,17 @@ void main() {
     });
 
     test('Get with wrong type', () {
-      config.setNulStr('string', '256');
+      config.setNulStr('string', '"256"');
       // field 'string' has String type
       expect(() => config.getAs<int>('string'), throwsA(isA<TypeError>()));
     });
 
     // multiline
     test('multiline', () {
-      config.setNulStr('multiline', 'my test\nNext line');
-      expect(config.getString('multiline'), 'my test\nNext line');
+      config.setNulStr('multiline', '"my test\\nNext line"');
+      expect(config.getString('multiline'), '"my test\\nNext line"');
       final anyVal = config.get('multiline');
+      print(anyVal);
       expect(anyVal, 'my test\nNext line');
       expect(anyVal.runtimeType.toString(), 'String');
       expect(config.getAs<String>('multiline'), 'my test\nNext line');
@@ -38,8 +39,8 @@ void main() {
 
     // select
     test('select', () {
-      config.setNulStr('select', 'my test');
-      expect(config.getString('select'), 'my test');
+      config.setNulStr('select', '"my test"');
+      expect(config.getString('select'), '"my test"');
       final anyVal = config.get('select');
       expect(anyVal, 'my test');
       expect(anyVal.runtimeType.toString(), 'String');
@@ -55,20 +56,19 @@ void main() {
       expect(anyVal.runtimeType.toString(), 'bool');
       expect(config.getAs<bool>('bool'), true);
     });
-
     // strings
     test('strings single', () {
-      config.setNulStr('strings', 'Single test');
-      expect(config.getString('strings'), 'Single test');
+      config.setNulStr('strings', '["Single test"]');
+      expect(config.getString('strings'), '["Single test"]');
       final anyVal = config.get('strings');
       expect(anyVal, ['Single test']);
       expect(anyVal.runtimeType.toString(), 'List<String>');
       expect(config.getAs<List<String>>('strings'), ['Single test']);
     });
 
-    test('strings multi', () {
-      config.setNulStr('strings', 'Single one\nSingle two');
-      expect(config.getString('strings'), 'Single one\nSingle two');
+    test('strings several items', () {
+      config.setNulStr('strings', '["Single one","Single two"]');
+      expect(config.getString('strings'), '["Single one","Single two"]');
       final anyVal = config.get('strings');
       expect(anyVal, ['Single one', 'Single two']);
       expect(anyVal.runtimeType.toString(), 'List<String>');
@@ -80,8 +80,8 @@ void main() {
 
     // multiselect
     test('multiselect single', () {
-      config.setNulStr('strings', 'Single test');
-      expect(config.getString('strings'), 'Single test');
+      config.setNulStr('strings', '["Single test"]');
+      expect(config.getString('strings'), '["Single test"]');
       final anyVal = config.get('strings');
       expect(anyVal, ['Single test']);
       expect(anyVal.runtimeType.toString(), 'List<String>');
@@ -89,8 +89,8 @@ void main() {
     });
 
     test('multiselect multi', () {
-      config.setNulStr('strings', 'Single one\nSingle two');
-      expect(config.getString('strings'), 'Single one\nSingle two');
+      config.setNulStr('strings', '["Single one","Single two"]');
+      expect(config.getString('strings'), '["Single one","Single two"]');
       final anyVal = config.get('strings');
       expect(anyVal, ['Single one', 'Single two']);
       expect(anyVal.runtimeType.toString(), 'List<String>');
@@ -110,8 +110,8 @@ void main() {
     });
 
     test('ints', () {
-      config.setNulStr('ints', '42\n43');
-      expect(config.getString('ints'), '42\n43');
+      config.setNulStr('ints', '[42,43]');
+      expect(config.getString('ints'), '[42,43]');
       final anyVal = config.get('ints');
       expect(anyVal, [42, 43]);
       expect(anyVal.runtimeType.toString(), 'List<int>');
@@ -137,8 +137,8 @@ void main() {
     });
 
     test('doubles', () {
-      config.setNulStr('doubles', '42.2\n42.3');
-      expect(config.getString('doubles'), '42.2\n42.3');
+      config.setNulStr('doubles', '[42.2,42.3]');
+      expect(config.getString('doubles'), '[42.2,42.3]');
       final anyVal = config.get('doubles');
       expect(anyVal, [42.2, 42.3]);
       expect(anyVal.runtimeType.toString(), 'List<double>');
@@ -155,8 +155,8 @@ void main() {
     });
 
     test('intMultiselect', () {
-      config.setNulStr('intMultiselect', '42\n43');
-      expect(config.getString('intMultiselect'), '42\n43');
+      config.setNulStr('intMultiselect', '[42,43]');
+      expect(config.getString('intMultiselect'), '[42,43]');
       final anyVal = config.get('intMultiselect');
       expect(anyVal, [42, 43]);
       expect(anyVal.runtimeType.toString(), 'List<int>');
@@ -173,14 +173,12 @@ void main() {
     });
 
     test('doubleMultiselect', () {
-      config.setNulStr('doubleMultiselect', '42.2\n42.3');
-      expect(config.getString('doubleMultiselect'), '42.2\n42.3');
+      config.setNulStr('doubleMultiselect', '[42.2,42.3]');
+      expect(config.getString('doubleMultiselect'), '[42.2,42.3]');
       final anyVal = config.get('doubleMultiselect');
       expect(anyVal, [42.2, 42.3]);
       expect(anyVal.runtimeType.toString(), 'List<double>');
       expect(config.getAs<List<double>>('doubleMultiselect'), [42.2, 42.3]);
     });
-
-    // -----------
   });
 }

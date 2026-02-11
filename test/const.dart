@@ -25,3 +25,37 @@ final Map<String, ConfigMapItem> fieldMap = {
     type: ConfigMapTypes.doubleMultiselect,
   ),
 };
+
+final ConfigMapJson nullMapConfig = {
+  'string': null,
+  'multiline': null,
+  'select': null,
+  'bool': null,
+  'strings': null,
+  'multiselect': null,
+  'int': null,
+  'ints': null,
+  'double': null,
+  'doubles': null,
+  'intSelect': null,
+  'intMultiselect': null,
+  'doubleSelect': null,
+  'doubleMultiselect': null,
+};
+
+final ConfigNaturalJson nullNaturalConfig = {
+  'string': null,
+  'multiline': null,
+  'select': null,
+  'bool': null,
+  'strings': null,
+  'multiselect': null,
+  'int': null,
+  'ints': null,
+  'double': null,
+  'doubles': null,
+  'intSelect': null,
+  'intMultiselect': null,
+  'doubleSelect': null,
+  'doubleMultiselect': null,
+};

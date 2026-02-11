@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 import 'package:config_map/config_map.dart';
 
@@ -12,14 +14,14 @@ class ConfigMap {
     ConfigMapJson json = const {},
   }) {
     _fields = fields;
-    init(json);
+    initConfigJson(json);
   }
 
   /// Check empty string -  '' or `null`
   static bool nulStrIsNotEmpty(String? str) => str != null && str != '';
 
   /// Set/reset new json object which using for storing data
-  void init(ConfigMapJson json, {bool withMerge = false}) {
+  void initConfigJson(ConfigMapJson json, {bool withMerge = false}) {
     if (!withMerge) {
       _json = {};
     }
@@ -28,12 +30,33 @@ class ConfigMap {
     }
   }
 
+  void initJson(ConfigNaturalJson json, {bool withMerge = false}) {
+    if (!withMerge) {
+      _json = {};
+    }
+    for (final field in _fields) {
+      final value = json[field.name];
+
+      _json[field.name] = value == null ? null : jsonEncode(json[field.name]);
+    }
+  }
+
   /// Export json object for storing. Full and compact
-  ConfigMapJson toJson({bool compact = false}) {
+  ConfigMapJson toConfigJson({bool compact = false}) {
     final ConfigMapJson res = {};
     for (final field in _fields) {
       if (compact && _json[field.name] == null) continue;
       res[field.name] = _json[field.name];
+    }
+    return res;
+  }
+
+  ConfigNaturalJson toJson({bool compact = false}) {
+    final ConfigNaturalJson res = {};
+    for (final field in _fields) {
+      final value = _json[field.name];
+      if (compact && value == null) continue;
+      res[field.name] = value == null ? null : get(field.name);
     }
     return res;
   }
@@ -47,7 +70,7 @@ class ConfigMap {
   }
 
   /// Check if the field is set
-  bool has(String name) => toJson()[name] != null;
+  bool has(String name) => toConfigJson()[name] != null;
 
   /// Check field by name in fields set
   ConfigMapItem? fieldByName(String name) =>
@@ -78,12 +101,17 @@ class ConfigMap {
       case ConfigMapTypes.string:
       case ConfigMapTypes.multiline:
       case ConfigMapTypes.select:
-        return value;
+        return jsonDecode(value);
       case ConfigMapTypes.bool:
         return value == 'true';
       case ConfigMapTypes.strings:
       case ConfigMapTypes.multiselect:
-        return value.split('\n').toList();
+        final list = jsonDecode(value);
+        if (list is List) {
+          return List<String>.from(list);
+        } else {
+          throw TypeError();
+        }
       case ConfigMapTypes.int:
       case ConfigMapTypes.intSelect:
         try {
@@ -100,17 +128,19 @@ class ConfigMap {
         }
       case ConfigMapTypes.ints:
       case ConfigMapTypes.intMultiselect:
-        try {
-          return value.split('\n').map((item) => int.parse(item)).toList();
-        } catch (e) {
-          return null;
+        final list = jsonDecode(value);
+        if (list is List) {
+          return List<int>.from(list);
+        } else {
+          throw TypeError();
         }
       case ConfigMapTypes.doubles:
       case ConfigMapTypes.doubleMultiselect:
-        try {
-          return value.split('\n').map((item) => double.parse(item)).toList();
-        } catch (e) {
-          return null;
+        final list = jsonDecode(value);
+        if (list is List) {
+          return List<double>.from(list);
+        } else {
+          throw TypeError();
         }
     }
   }
@@ -127,7 +157,7 @@ class ConfigMap {
         !singleType) {
       throw TypeError();
     }
-    setNulStr(name, value.toString());
+    setNulStr(name, jsonEncode(value));
   }
 
   /// Set list `value` on key `name`. Value can be List of simple type `int` || `double` || `String` || `bool`
@@ -136,12 +166,7 @@ class ConfigMap {
     if (field == null || !mapTypesAsList.contains(field.type)) {
       throw TypeError();
     }
-    final converted = value
-        .map((item) {
-          return item.toString();
-        })
-        .join('\n');
-    setNulStr(name, converted);
+    setNulStr(name, jsonEncode(value));
   }
 
   // void setMap(String name, Map<String, dynamic> value) for `map`, `intMap`, `doubleMap`, `boolMap`

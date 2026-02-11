@@ -8,27 +8,27 @@ void main() {
     ConfigMap config = ConfigMap(fields: fieldMap.values.toList());
 
     setUp(() {
-      config.init({});
+      config.initConfigJson({});
     });
 
     test('string', () {
       config.setSingle('string', 'test string');
 
-      expect(config.getString('string'), 'test string');
+      expect(config.getString('string'), '"test string"');
       expect(config.getAs<String>('string'), 'test string');
     });
 
     test('multiline', () {
       config.setSingle('multiline', 'test string');
 
-      expect(config.getString('multiline'), 'test string');
+      expect(config.getString('multiline'), '"test string"');
       expect(config.getAs<String>('multiline'), 'test string');
     });
 
     test('select', () {
       config.setSingle('select', 'test string');
 
-      expect(config.getString('select'), 'test string');
+      expect(config.getString('select'), '"test string"');
       expect(config.getAs<String>('select'), 'test string');
     });
 
@@ -42,14 +42,14 @@ void main() {
     test('strings', () {
       config.setList('strings', ['one', 'two']);
 
-      expect(config.getString('strings'), 'one\ntwo');
+      expect(config.getString('strings'), '["one","two"]');
       expect(config.getAs<List<String>>('strings'), ['one', 'two']);
     });
 
     test('multiselect', () {
       config.setList('multiselect', ['one', 'two']);
 
-      expect(config.getString('multiselect'), 'one\ntwo');
+      expect(config.getString('multiselect'), '["one","two"]');
       expect(config.getAs<List<String>>('multiselect'), ['one', 'two']);
     });
 
@@ -63,7 +63,7 @@ void main() {
     test('ints', () {
       config.setList('ints', [125, 126]);
 
-      expect(config.getString('ints'), '125\n126');
+      expect(config.getString('ints'), '[125,126]');
       expect(config.getAs<List<int>>('ints'), [125, 126]);
     });
 
@@ -77,7 +77,7 @@ void main() {
     test('doubles', () {
       config.setList('doubles', [125.2, 126.2]);
 
-      expect(config.getString('doubles'), '125.2\n126.2');
+      expect(config.getString('doubles'), '[125.2,126.2]');
       expect(config.getAs<List<double>>('doubles'), [125.2, 126.2]);
     });
 
@@ -91,7 +91,7 @@ void main() {
     test('intMultiselect', () {
       config.setList('intMultiselect', [125, 126]);
 
-      expect(config.getString('intMultiselect'), '125\n126');
+      expect(config.getString('intMultiselect'), '[125,126]');
       expect(config.getAs<List<int>>('intMultiselect'), [125, 126]);
     });
 
@@ -105,10 +105,9 @@ void main() {
     test('doubleMultiselect', () {
       config.setList('doubleMultiselect', [125.2, 126.2]);
 
-      expect(config.getString('doubleMultiselect'), '125.2\n126.2');
+      expect(config.getString('doubleMultiselect'), '[125.2,126.2]');
       expect(config.getAs<List<double>>('doubleMultiselect'), [125.2, 126.2]);
     });
-
     // -----------
   });
 }

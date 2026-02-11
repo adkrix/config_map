@@ -63,7 +63,7 @@ void main() {
 
   print('\nEmpty config and init data  later\n');
   final emptyConfig = CustomConfigMap();
-  emptyConfig.init(fullMapConfig);
+  emptyConfig.initConfigJson(fullMapConfig);
 
   print('\nEmpty config get as string \n-------------------');
   for (final name in allFieldNames) {
@@ -79,7 +79,7 @@ void main() {
 
   print('\nEmpty config reset \n-------------------');
 
-  emptyConfig.init(resetMapConfig);
+  emptyConfig.initConfigJson(resetMapConfig);
   for (final name in allFieldNames) {
     printVar(name, emptyConfig.get(name));
   }
@@ -92,8 +92,8 @@ void main() {
 
   print('\ntoJson\n-------------------');
 
-  print(encoder.convert(emptyConfig.toJson()));
+  print(encoder.convert(emptyConfig.toConfigJson()));
 
   print('\ntoJson: compact\n-------------------');
-  print(encoder.convert(emptyConfig.toJson(compact: true)));
+  print(encoder.convert(emptyConfig.toConfigJson(compact: true)));
 }
