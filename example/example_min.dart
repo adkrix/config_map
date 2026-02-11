@@ -43,7 +43,7 @@ void main() {
   printValue(countStr); // '456' String
   printValue(countNext); // 456 int
 
-  config.setList('author', ['Bob', 'Bill']);
+  config.setList('authors', ['Bob', 'Bill']);
   final authorsNext = config.get('authors'); // ['Bob', 'Bill']
   final String? authorsStr = config.getString('authors'); // 'Bob\nBill'
 
