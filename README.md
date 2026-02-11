@@ -19,44 +19,43 @@ to `/example` folder.
 ```dart
 import 'package:config_map/config_map.dart';
 
-// <T extends Enum>
 final myMapConfig = {
   'title': 'Title of book',
-  'description': 'Description of book', 
+  'description': 'Description of book',
   'authors': 'John Author\nJain Author',
   'show': 'true',
   'count': '123',
 };
 
-enum FieldNames {
-  title,description, authors, show
-}
 List<ConfigMapItem> fields = [
-  ConfigMapItem('title', ConfigMapType.string),
-  ConfigMapItem('description', ConfigMapType.multiline),
-  ConfigMapItem('authors', ConfigMapType.strings),
-  ConfigMapItem('show', ConfigMapType.bool),
-  ConfigMapItem('count', ConfigMapType.int),
+  ConfigMapItem('title', type: ConfigMapTypes.string),
+  ConfigMapItem('description', type: ConfigMapTypes.multiline),
+  ConfigMapItem('authors', type: ConfigMapTypes.strings),
+  ConfigMapItem('show', type: ConfigMapTypes.bool),
+  ConfigMapItem('count', type: ConfigMapTypes.int),
 ];
 
 void main() {
-  final config = ConfigMap<FieldNames>(fields, json: myMapConfig);
+  final config = ConfigMap(json: myMapConfig, fields: fields);
 
-  final String title = config.get('title');
-  final bool show = config.get('show');
-  final int count = config.get('count'); // 123
-  final int countInt = config.getAs<int>('count'); // 123
-  final List<String> authors = config.get('authors'); // ['John Author', 'Jain Author']
+  final title = config.get('title');
+  final show = config.get('show');
+  final count = config.get('count'); // 123
+  final countInt = config.getAs<int>('count'); // 123
+  final authors = config.get('authors'); // ['John Author', 'Jain Author']
+
+  print('${title.runtimeType} $title'); // 'Title of book' String?
+  print('${show.runtimeType} ${show.toString()}'); // true bool
+  print('${count.runtimeType} ${count.toString()}'); // 'Title of book' bool
 
   config.setSingle('count', 456);
-  final String countStr = config.getString('count'); // '456'
+  final String? countStr = config.getString('count'); // '456'
   final int countNext = config.getAs<int>('count'); // 456
 
   config.setList('author', ['Bob', 'Bill']);
-  final List<String> authorsNext = config.get('authors'); // ['Bob', 'Bill']
-  final List<String> authorsStr = config.getString('authors'); // 'Bob\nBill'
+  final authorsNext = config.get('authors'); // ['Bob', 'Bill']
+  final String? authorsStr = config.getString('authors'); // 'Bob\nBill'
 }
-
 ```
 
 ## Additional information
