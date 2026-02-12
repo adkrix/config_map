@@ -1,5 +1,5 @@
 /// Storing type
-typedef ConfigNaturalJson = Map<String, Object?>;
+typedef MapJson = Map<String, Object?>;
 
 typedef ConfigMapJson = Map<String, String?>;
 

@@ -35,28 +35,28 @@ final allFieldNames = [
 const langOptions = {'en': 'English'};
 
 final ConfigMapJson fullMapConfig = {
-  fTitle: 'Title of book',
-  fLanguage: 'en',
-  fDescription: 'Description of book',
-  fAuthors: 'John Author\nJane Author',
+  fTitle: '"Title of book"',
+  fLanguage: '"en"',
+  fDescription: '"Description of book\\nNext line"',
+  fAuthors: '["John Author","Jane Author"]',
   fPublishers:
-      'Penguin Random House\nHarperCollins\nSimon & Schuster\nHachette Book Group\nMacmillan',
+      '["Penguin Random House","HarperCollins","Simon & Schuster","Hachette Book Group","Macmillan"]',
   fShow: 'true',
   fOrder: '152',
-  fOrders: '152\n56',
+  fOrders: '[152,56]',
   fPrice: '152.23',
-  fPrices: '152.23\n12.96',
+  fPrices: '[152.23,12.96]',
   fCount: '12',
-  fCounts: '12\n23',
+  fCounts: '[12,23]',
   fDiscount: '2.5',
-  fDiscounts: '2.2\n3.5\n1.25',
+  fDiscounts: '[2.2,3.5,1.25]',
 };
 
 final ConfigMapJson resetMapConfig = {
-  fTitle: 'Title of another book',
-  fLanguage: 'af',
-  fAuthors: 'André Brink\nBreyten Breytenbach\nAntjie Krog',
-  'show': 'false',
-  'order': '562',
-  'price': '26.78',
+  fTitle: '"Title of another book"',
+  fLanguage: '"af"',
+  fAuthors: '["André Brink","Breyten Breytenbach","Antjie Krog"]',
+  fShow: 'false',
+  fOrder: '562',
+  fPrice: '26.78',
 };

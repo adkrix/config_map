@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:config_map/config_map.dart';
 
+import 'config_map_utils.dart';
+
 /// Object converter
 class ConfigMap {
   late final List<ConfigMapItem> _fields;
@@ -11,10 +13,10 @@ class ConfigMap {
   /// Constructor
   ConfigMap({
     required List<ConfigMapItem> fields,
-    ConfigMapJson json = const {},
+    ConfigMapJson configJson = const {},
   }) {
     _fields = fields;
-    initConfigJson(json);
+    initConfigJson(configJson);
   }
 
   /// Check empty string -  '' or `null`
@@ -30,7 +32,7 @@ class ConfigMap {
     }
   }
 
-  void initJson(ConfigNaturalJson json, {bool withMerge = false}) {
+  void initJson(MapJson json, {bool withMerge = false}) {
     if (!withMerge) {
       _json = {};
     }
@@ -51,8 +53,8 @@ class ConfigMap {
     return res;
   }
 
-  ConfigNaturalJson toJson({bool compact = false}) {
-    final ConfigNaturalJson res = {};
+  MapJson toJson({bool compact = false}) {
+    final MapJson res = {};
     for (final field in _fields) {
       final value = _json[field.name];
       if (compact && value == null) continue;
@@ -101,47 +103,25 @@ class ConfigMap {
       case ConfigMapTypes.string:
       case ConfigMapTypes.multiline:
       case ConfigMapTypes.select:
-        return jsonDecode(value);
+        return ConfigMapUtils.parseString(value);
       case ConfigMapTypes.bool:
-        return value == 'true';
+        return ConfigMapUtils.parseBool(value);
       case ConfigMapTypes.strings:
       case ConfigMapTypes.multiselect:
-        final list = jsonDecode(value);
-        if (list is List) {
-          return List<String>.from(list);
-        } else {
-          throw TypeError();
-        }
+        return ConfigMapUtils.parseStringList(value);
       case ConfigMapTypes.int:
       case ConfigMapTypes.intSelect:
-        try {
-          return int.parse(value);
-        } catch (e) {
-          return null;
-        }
+        return ConfigMapUtils.parseInt(value);
+
       case ConfigMapTypes.double:
       case ConfigMapTypes.doubleSelect:
-        try {
-          return double.parse(value);
-        } catch (e) {
-          return null;
-        }
+        return ConfigMapUtils.parseDouble(value);
       case ConfigMapTypes.ints:
       case ConfigMapTypes.intMultiselect:
-        final list = jsonDecode(value);
-        if (list is List) {
-          return List<int>.from(list);
-        } else {
-          throw TypeError();
-        }
+        return ConfigMapUtils.parseIntList(value);
       case ConfigMapTypes.doubles:
       case ConfigMapTypes.doubleMultiselect:
-        final list = jsonDecode(value);
-        if (list is List) {
-          return List<double>.from(list);
-        } else {
-          throw TypeError();
-        }
+        return ConfigMapUtils.parseDoubleList(value);
     }
   }
 

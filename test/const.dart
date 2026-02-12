@@ -43,7 +43,7 @@ final ConfigMapJson nullMapConfig = {
   'doubleMultiselect': null,
 };
 
-final ConfigNaturalJson nullNaturalConfig = {
+final MapJson nullNaturalConfig = {
   'string': null,
   'multiline': null,
   'select': null,

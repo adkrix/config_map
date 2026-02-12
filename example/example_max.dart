@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:config_map/config_map.dart';
 
 import 'const.dart';
+import 'lib.dart';
 
 List<ConfigMapItem> fieldList = [
   ConfigMapItem(fTitle), // default type: ConfigMapTypes.string
@@ -28,7 +29,7 @@ extension ConfigMapGetter on ConfigMap {
 
 // custom class with hardcoded field list (if static options)
 class CustomConfigMap extends ConfigMap {
-  CustomConfigMap({super.json}) : super(fields: fieldList);
+  CustomConfigMap({super.configJson}) : super(fields: fieldList);
 
   String? get title => getAs<String?>(fTitle);
   // String? get description => getAs<String?>(fDescription);
@@ -40,16 +41,10 @@ class CustomConfigMap extends ConfigMap {
   List<double>? get prices => getAs<List<double>?>(fPrices);
 }
 
-void printVar(String name, dynamic variable) {
-  print(
-    '${variable.runtimeType.toString().padRight(12)} $name = ${variable.toString()}',
-  );
-}
-
 void main() {
   var encoder = const JsonEncoder.withIndent('  ');
 
-  final config = CustomConfigMap(json: fullMapConfig);
+  final config = CustomConfigMap(configJson: fullMapConfig);
 
   print('Config with data (use getter)\n-------------------');
   printVar('title', config.title);
