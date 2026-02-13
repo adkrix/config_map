@@ -1,6 +1,7 @@
-## 0.1.0
+## 0.2.0
+- new interface and store format (JSON string for each key) 
 
-- Initial version
+## 0.1.4
 - init()
 - setNulStr()
 - getString()
@@ -8,16 +9,6 @@
 - getAs()
 - setSingle()
 - setList()
-
-## 0.1.1
-- add comments
-- fix warnings
-
-## 0.1.2
-- add comments to fix warnings
-
-## 0.1.3
-- add example, change readme
-
-## 0.1.4
 - fix example_min.dart
+- add example, change readme
+- add comments to fix warnings
