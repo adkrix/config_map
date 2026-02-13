@@ -1,3 +1,7 @@
+
+## 0.2.1
+- export ConfigMapUtils
+
 ## 0.2.0
 - new interface and store format (JSON string for each key) 
 
