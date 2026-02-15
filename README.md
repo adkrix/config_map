@@ -68,6 +68,7 @@ void main() {
 | multiline         | String          | Multiline TextField  |
 | select            | String          | Custom select Widget |
 | bool              | bool            | Switch               |
+| check             | bool            | Checkbox             |
 | int               | int             | TextField            |
 | intSelect         | int             | Custom select Widget |
 | double            | double          | TextField            |

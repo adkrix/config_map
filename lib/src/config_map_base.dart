@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:config_map/config_map.dart';
 
-import 'config_map_utils.dart';
-
 /// Object converter
 class ConfigMap {
   late final List<ConfigMapItem> _fields;
@@ -105,6 +103,7 @@ class ConfigMap {
       case ConfigMapTypes.select:
         return ConfigMapUtils.parseString(value);
       case ConfigMapTypes.bool:
+      case ConfigMapTypes.check:
         return ConfigMapUtils.parseBool(value);
       case ConfigMapTypes.strings:
       case ConfigMapTypes.multiselect:

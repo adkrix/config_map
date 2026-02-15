@@ -14,8 +14,11 @@ enum ConfigMapTypes {
   /// parsing as `String`
   select,
 
-  /// parsing as `String`
+  /// parsing as `bool` for Switch widget
   bool,
+
+  /// parsing as `bool` for Checkbox widget
+  check,
 
   /// parsing as `int`
   int,
