@@ -1,3 +1,5 @@
+## 0.3.0
+- add bool field: check for Checkbox widget
 
 ## 0.2.1
 - export ConfigMapUtils
