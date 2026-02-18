@@ -19,10 +19,12 @@ to `/example` folder.
 ```dart
 import 'package:config_map/config_map.dart';
 
+import 'lib.dart';
+
 final myMapConfig = {
-  'title': 'Title of book',
-  'description': 'Description of book',
-  'authors': 'John Author\nJain Author',
+  'title': '"Title of book"',
+  'description': '"Description of book"',
+  'authors': '["John Author","Jain Author"]',
   'show': 'true',
   'count': '123',
 };
@@ -36,7 +38,7 @@ List<ConfigMapItem> fields = [
 ];
 
 void main() {
-  final config = ConfigMap(json: myMapConfig, fields: fields);
+  final config = ConfigMap(configJson: myMapConfig, fields: fields);
 
   final title = config.get('title');
   final show = config.get('show');
@@ -44,17 +46,36 @@ void main() {
   final countInt = config.getAs<int>('count'); // 123
   final authors = config.get('authors'); // ['John Author', 'Jain Author']
 
-  print('${title.runtimeType} $title'); // 'Title of book' String?
-  print('${show.runtimeType} ${show.toString()}'); // true bool
-  print('${count.runtimeType} ${count.toString()}'); // 'Title of book' bool
+  printVar('title', title); // String       title = Title of book
+  printVar('show', show); // bool         show = true
+  printVar('count', count); // int          count = 123
+
+  printVar('count :int', countInt); // int          count :int = 123
+  printVar(
+    'authors',
+    authors,
+  ); // List<String> authors = [John Author, Jain Author]
 
   config.setSingle('count', 456);
-  final String? countStr = config.getString('count'); // '456'
-  final int countNext = config.getAs<int>('count'); // 456
+  final String? countStr = config.getString('count');
+  final int countNext = config.getAs<int>('count');
 
-  config.setList('author', ['Bob', 'Bill']);
-  final authorsNext = config.get('authors'); // ['Bob', 'Bill']
-  final String? authorsStr = config.getString('authors'); // 'Bob\nBill'
+  printVar('count :String', countStr); // String       count :String = 456
+  printVar('count :next', countNext); // int          count :next = 456
+
+  // ---
+  config.setList('authors', ['Bob', 'Bill']);
+  final authorsNext = config.get('authors');
+  final String? authorsStr = config.getString('authors');
+
+  printVar(
+    'authors :next',
+    authorsNext,
+  ); // List<String> authors :next = [Bob, Bill]
+  printVar(
+    'authors :String',
+    authorsStr,
+  ); // String       authors :String = ["Bob","Bill"]
 }
 ```
 

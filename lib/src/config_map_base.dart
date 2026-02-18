@@ -30,6 +30,7 @@ class ConfigMap {
     }
   }
 
+  /// reset object with new natural JSON
   void initJson(MapJson json, {bool withMerge = false}) {
     if (!withMerge) {
       _json = {};
@@ -41,7 +42,7 @@ class ConfigMap {
     }
   }
 
-  /// Export json object for storing. Full and compact
+  /// Export JSON object for storing. Full and compact
   ConfigMapJson toConfigJson({bool compact = false}) {
     final ConfigMapJson res = {};
     for (final field in _fields) {
@@ -51,6 +52,7 @@ class ConfigMap {
     return res;
   }
 
+  /// Convert object to natural JSON
   MapJson toJson({bool compact = false}) {
     final MapJson res = {};
     for (final field in _fields) {

@@ -1,6 +1,7 @@
-/// Storing type
+/// Natural JSON map
 typedef MapJson = Map<String, Object?>;
 
+/// Storing JSON type
 typedef ConfigMapJson = Map<String, String?>;
 
 /// Field types for getter, setter and form generation
