@@ -1,3 +1,6 @@
+## 0.3.1
+- add documentation comments; fix static constructor
+
 ## 0.3.0
 - add bool field: check for Checkbox widget
 
