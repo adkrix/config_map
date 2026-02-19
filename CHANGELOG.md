@@ -1,3 +1,6 @@
+## 0.3.2
+-fix: parse list error
+
 ## 0.3.1
 - add documentation comments; fix static constructor
 
