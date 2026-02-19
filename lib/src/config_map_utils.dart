@@ -3,6 +3,7 @@ import 'dart:convert';
 /// Convert data utils (parsing JSON string and return typed value)
 class ConfigMapUtils {
   ConfigMapUtils._();
+
   /// Parse boolean value from JSON string
   static bool parseBool(String value) => value == 'true';
 
@@ -21,8 +22,8 @@ class ConfigMapUtils {
     String value, {
     bool throwError = false,
   }) {
-    final list = jsonDecode(value);
     try {
+      final list = jsonDecode(value);
       return List<String>.from(list);
     } catch (e) {
       if (throwError) throw TypeError();
